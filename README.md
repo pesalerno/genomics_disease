@@ -4,11 +4,11 @@
 
 There are three genomics and disease datasets used in this study. 
 
-- Colorado mountan lions distributed in the western slope and Front Range, 12444 SNPs, 134 individuals and 0.881594 genotyping rate. **DISEASE DATA INFO HERE** 
+- Colorado mountan lions distributed in the western slope and Front Range, 12444 SNPs, 134 individuals and 0.881594 genotyping rate, initial post-filtered SNP matrix [here](https://github.com/pesalerno/genomics_disease/blob/master/CO_pumas_FINAL_b.stru). **DISEASE DATA INFO HERE** 
 
-- California mountain lions in the LA Basin Area, 9651 SNPs, 88 individuals and 0.729214 genotyping rate. **DISEASE DATA INFO HERE** 
+- California mountain lions in the LA Basin Area, 9651 SNPs, 88 individuals and 0.729214 genotyping rate, initial post-filtered SNP matrix [here](https://github.com/pesalerno/genomics_disease/blob/master/noOutFIXEDM4N4_40-50.ped). **DISEASE DATA INFO HERE** 
 
-- California bobcats in the LA Basin Area, 13649 SNPs, 281 individuals and 0.843702 genotyping rate. **DISEASE DATA INFO HERE** 
+- California bobcats in the LA Basin Area, 13649 SNPs, 281 individuals and 0.843702 genotyping rate, initial post-filtered SNP matrix [here](https://github.com/pesalerno/genomics_disease/blob/master/CA_bobcats_all-loci.structure.stru). **DISEASE DATA INFO HERE** 
 
 
 
@@ -23,7 +23,7 @@ There are three genomics and disease datasets used in this study.
 
 1. **Get filtered SNP matrices**
 
-Link this to the puma project for how to get the matrix outputs. 
+We used the same protocol and pipeline for genotyping and filtering, as described in detail [here](https://github.com/pesalerno/PUMAgenomics). 
 
 2. **Filter for Linkage Disequilibrium in all three datasets** 
 
@@ -48,7 +48,7 @@ And then using this file (named **LD-loci-list.txt**) we generate our LE SNP mat
 	./plink --file filename --exclude LD-loci-list.txt --recode --out LD-filtered
 
 
-The resulting CO pumas matrix had 12427 SNPs remaining, and the resulting CA pumas matrix had 9367 SNPs. 
+The resulting CO pumas matrix had [12427 SNPs remaining](https://github.com/pesalerno/genomics_disease/blob/master/puma_CO-LD-filtered.ped), and the resulting CA pumas matrix had [9367 SNPs](https://github.com/pesalerno/genomics_disease/blob/master/puma_CA-LD-filtered.ped). 
 
 3. **Obtain F_h measure in *plink* for all three datasets**
 
@@ -57,10 +57,10 @@ We estimated the Fh heterozygosity measure which is a proxy for individual inbre
 	plink --noweb --file mydata --het --out outputfilename
 
 
-4. **Run LMMs and other basic stats for all datasets together**
+4. **Run GLMs and other basic stats for inbreeding and disease presence for CA bobcats, CA pumas, and CO pumas**
 
+We ran our stats in R using packages lme4, dplyr, MuMIn, and xxx. See R code used [here].
 
-5. **Run LMMs for each dataset separately** 
 
 
 #
