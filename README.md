@@ -32,7 +32,7 @@ I filtered for LD using plink with the following code:
 	plink --noweb --file mydata --r2 --out outputfilename 
 	
 	
-The CO puma dataset only had 23 loci pairs with r2>0.5, the CA bobcat dataset had zero loci pairs with r2>0.5, and the CA puma dataset had xxx loci that had r2>0.5. 
+The CO puma dataset only had 23 loci pairs with r2>0.5, the CA bobcat dataset had zero loci pairs with r2>0.5, and the CA puma dataset had 310 loci that had r2>0.5. 
 
 In order to create a blacklist of loci in LD to exclude form the SNP matrix, we used find/replace arguments in TextWrangler to create a list of SNPs like this:
 
@@ -71,13 +71,21 @@ We ran our stats in R using packages lme4, dplyr, MuMIn, and xxx. See R code use
 2.Do individual SNPs predict apathogenic disease presence? 
 ---
 
-1. Run GWAS analyses in plink with unfiltered LD datasets for all three datasets.
+1. **Run GWAS analyses in plink with unfiltered LD datasets for all three datasets.**
 
 To perform a standard case/control study, we performed a simple asosciation study in plink: 
 
 		plink --file filename --assoc #add --ci 0.95 for a 95% CI estimation
 
-Which gives you chisquare odds ratio test results for each allele. Then, we performed a standard case/control study using Fisher's Exact test (allelic association) to generate significance: 
+Which gives you chisquare odds ratio test results for each allele. To pick out p-value column using awk code for quickly sorting significant associations: 
+
+ 	awk -F ' ' '{print $9}' plink.assoc
+ 	
+
+**RESULT:** Colorado pumas = 273 SNPs significantly associated to FIV presence.  
+ 
+
+Then, we performed a standard case/control study using Fisher's Exact test (allelic association) to generate significance: 
 
 	plink --file myData --fisher 
 
@@ -88,6 +96,14 @@ Which gives you chisquare odds ratio test results for each allele. Then, we perf
 3. BLAST all loci that came out as correlated, even ones in LD. Of the loci that come out as correlated to the trait, find out which of those are in LD and list BLAST results by LD group. 
 
 
+ #
+ 
+ #
  
 
+3. Host phylogenetic trees and phenoptype/inbreeding heatmap 
+----
 
+raxml: Perform an all-in-one analysis (ML tree search + non-parametric bootstrap) (10 randomized parsimony starting trees, fixed empirical substitution matrix (LG), empirical aminoacid frequencies from alignment, 8 discrete GAMMA categories, 200 bootstrap replicates)
+
+	./raxml-ng --all --msa testAA.fa --model LG+G8+F --tree pars{10} --bs-trees 200
